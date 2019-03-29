@@ -1,0 +1,16 @@
+--[[
+xlua.hotfix(
+CS.HotFixTest, "Update", function(self)
+	print(self.tick)
+end
+)
+--]]
+xlua.hotfix(
+CS.HotFixTest, "FixUpdate", function(self)
+	self.str = "qiucheng"
+end
+)
+
+local camera = CS.UnityEngine.GameObject.Find("Main Camera")
+local fix = camera:GetComponent("HotFixTest")
+fix.str = "hello"
