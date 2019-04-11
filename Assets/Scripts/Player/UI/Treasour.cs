@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XLua;
 /// <summary>
 /// 宝藏
 /// </summary>
+[Hotfix]
 public class Treasour : MonoBehaviour
 {
 
@@ -12,7 +14,7 @@ public class Treasour : MonoBehaviour
     private Image img;
 
     public GameObject gold;
-    public GameObject diamands;
+    public GameObject diamond;
     public GameObject cdView;
 
     public Transform cavas;
@@ -38,13 +40,14 @@ public class Treasour : MonoBehaviour
         CreatePrize();
         isDrease = true;
     }
+
     private void CreatePrize()
     {
         for (int i = 0; i < 5; i++)
         {
             GameObject go = Instantiate(gold, transform.position + new Vector3(-10f + i * 30, 0, 0), transform.rotation);
             go.transform.SetParent(cavas);
-            GameObject go1 = Instantiate(diamands, transform.position + new Vector3(0, 30, 0) + new Vector3(-10f + i * 30, 0, 0), transform.rotation);
+            GameObject go1 = Instantiate(diamond, transform.position + new Vector3(0, 30, 0) + new Vector3(-10f + i * 30, 0, 0), transform.rotation);
             go1.transform.SetParent(cavas);
         }
     }

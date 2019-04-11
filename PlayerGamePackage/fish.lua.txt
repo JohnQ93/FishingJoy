@@ -1,1 +1,11 @@
-print(123)
+-- 1.点击宝箱领取的金币钻石太拥挤，分散一点。
+
+local UnityEngine = CS.UnityEngine
+xlua.hotfix(CS.Treasour,"CreatePrize",function(self)
+	for i=0,4,1 do
+		local go = UnityEngine.GameObject.Instantiate(self.gold,self.transform.position+UnityEngine.Vector3(-10+i*40,0,0),self.transform.rotation)
+		go.transform:SetParent(self.cavas)
+		local go1 = UnityEngine.GameObject.Instantiate(self.diamond,self.transform.position+UnityEngine.Vector3(0,40,0)+UnityEngine.Vector3(-10+i*40,0,0),self.transform.rotation)
+		go1.transform:SetParent(self.cavas)
+	end
+end)

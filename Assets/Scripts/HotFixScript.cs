@@ -22,4 +22,14 @@ public class HotFixScript : MonoBehaviour {
         //return File.ReadAllBytes(absPath);
         return System.Text.Encoding.UTF8.GetBytes(File.ReadAllText(absPath));
     }
+
+    private void OnDisable()
+    {
+        luaEnv.DoString("require'fishDispose'");
+    }
+
+    private void OnDestroy()
+    {
+        luaEnv.Dispose();
+    }
 }
