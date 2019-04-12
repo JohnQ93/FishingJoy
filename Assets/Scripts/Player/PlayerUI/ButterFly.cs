@@ -57,7 +57,7 @@ public class ButterFly : MonoBehaviour
         if (canUse)
         {
 
-            if (Gun.Instance.diamands <= reduceDiamands)
+            if (Gun.Instance.diamond <= reduceDiamands)
             {
                 return;
             }

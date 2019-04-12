@@ -1,4 +1,4 @@
--- 1.点击宝箱领取的金币钻石太拥挤，分散一点。
+-- 1.1.1点击宝箱领取的金币钻石太拥挤，分散一点
 
 local UnityEngine = CS.UnityEngine
 xlua.hotfix(CS.Treasour,"CreatePrize",function(self)
@@ -7,5 +7,32 @@ xlua.hotfix(CS.Treasour,"CreatePrize",function(self)
 		go.transform:SetParent(self.cavas)
 		local go1 = UnityEngine.GameObject.Instantiate(self.diamond,self.transform.position+UnityEngine.Vector3(0,40,0)+UnityEngine.Vector3(-10+i*40,0,0),self.transform.rotation)
 		go1.transform:SetParent(self.cavas)
+	end
+end)
+
+-- 1.1.2玩家金币钻石不够时没有相应处理
+xlua.private_accessible(CS.Gun)
+xlua.hotfix(CS.Gun,"Attack",function(self)
+	if self.gold < 1 + (self.gunLevel - 1) * 2 then
+		return
+	end
+
+	if UnityEngine.Input.GetMouseButtonDown(0) then
+		self.bulletAudio.clip = self.bulletAudios[self.gunLevel - 1]
+		self.bulletAudio:Play()
+
+		if self.Butterfly then
+			UnityEngine.GameObject.Instantiate(self.Bullets[self.gunLevel - 1], self.attackPos.position, self.attackPos.rotation * UnityEngine.Quaternion.Euler(0,0,20))
+			UnityEngine.GameObject.Instantiate(self.Bullets[self.gunLevel - 1], self.attackPos.position, self.attackPos.rotation * UnityEngine.Quaternion.Euler(0,0,-20))
+		end
+
+		UnityEngine.GameObject.Instantiate(self.Bullets[self.gunLevel - 1], self.attackPos.position, self.attackPos.rotation)
+
+		if not self.canShootForFree then
+			self:GoldChange(-1 - (self.gunLevel - 1) * 2)
+		end
+
+		self.attackCD = 0
+		self.attack = false
 	end
 end)

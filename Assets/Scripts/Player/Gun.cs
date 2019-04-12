@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using XLua;
 
 /// <summary>
 /// 枪
 /// </summary>
-
+[Hotfix]
 public class Gun : MonoBehaviour
 {
 
@@ -15,7 +16,7 @@ public class Gun : MonoBehaviour
 
     //属性
     public int gold = 100;
-    public int diamands = 50;
+    public int diamond = 50;
     public int gunLevel = 1;
     private float rotateSpeed = 5f;
     public float attackCD = 1;
@@ -24,10 +25,10 @@ public class Gun : MonoBehaviour
 
     //引用
 
-    public AudioClip[] bullectAudios;
-    private AudioSource bullectAudio;
+    public AudioClip[] bulletAudios;
+    private AudioSource bulletAudio;
     public Transform attackPos;
-    public GameObject[] Bullects;
+    public GameObject[] Bullets;
     public GameObject net;
     public GunChange[] gunChange;
 
@@ -75,9 +76,9 @@ public class Gun : MonoBehaviour
     {
         instance = this;
         gold = 1000;
-        diamands = 1000;
+        diamond = 1000;
         level = 2;
-        bullectAudio = GetComponent<AudioSource>();
+        bulletAudio = GetComponent<AudioSource>();
     }
 
     // Use this for initialization
@@ -93,7 +94,7 @@ public class Gun : MonoBehaviour
 
 
         goldText.text = gold.ToString();
-        diamandsText.text = diamands.ToString();
+        diamandsText.text = diamond.ToString();
 
 
         //旋转枪的方法
@@ -213,16 +214,16 @@ public class Gun : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
 
-            bullectAudio.clip = bullectAudios[gunLevel - 1];
-            bullectAudio.Play();
+            bulletAudio.clip = bulletAudios[gunLevel - 1];
+            bulletAudio.Play();
 
             if (Butterfly)
             {
-                Instantiate(Bullects[gunLevel - 1], attackPos.position, attackPos.rotation * Quaternion.Euler(0, 0, 20));
-                Instantiate(Bullects[gunLevel - 1], attackPos.position, attackPos.rotation * Quaternion.Euler(0, 0, -20));
+                Instantiate(Bullets[gunLevel - 1], attackPos.position, attackPos.rotation * Quaternion.Euler(0, 0, 20));
+                Instantiate(Bullets[gunLevel - 1], attackPos.position, attackPos.rotation * Quaternion.Euler(0, 0, -20));
             }
 
-            Instantiate(Bullects[gunLevel - 1], attackPos.position, attackPos.rotation);
+            Instantiate(Bullets[gunLevel - 1], attackPos.position, attackPos.rotation);
 
 
             if (!canShootForFree)
@@ -258,7 +259,7 @@ public class Gun : MonoBehaviour
     {
 
 
-        diamands += number;
+        diamond += number;
     }
 
     /// <summary>

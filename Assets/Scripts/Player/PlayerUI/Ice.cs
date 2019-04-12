@@ -59,7 +59,7 @@ public class Ice : MonoBehaviour
             if (!Gun.Instance.Fire && !Gun.Instance.Ice)
             {
 
-                if (Gun.Instance.diamands <= reduceDiamands)
+                if (Gun.Instance.diamond <= reduceDiamands)
                 {
                     return;
                 }
