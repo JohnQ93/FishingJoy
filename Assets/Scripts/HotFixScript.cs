@@ -8,7 +8,7 @@ public class HotFixScript : MonoBehaviour {
 
     private LuaEnv luaEnv;
 
-    void Start () {
+    void Awake () {
         luaEnv = new LuaEnv();
 
         luaEnv.AddLoader(MyLoader);

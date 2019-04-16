@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XLua;
 /// <summary>
 /// boss脚本
 /// </summary>
-
+[Hotfix]
 public class Boss : MonoBehaviour
 {
 

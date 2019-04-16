@@ -13,6 +13,12 @@ end)
 -- 1.1.2玩家金币钻石不够时没有相应处理
 xlua.private_accessible(CS.Gun)
 xlua.hotfix(CS.Gun,"Attack",function(self)
+
+	-- 1.2.1与UI交互时不能发射子弹
+	if UnityEngine.EventSystems.EventSystem.current:IsPointerOverGameObject() then
+		return
+	end
+
 	if self.gold < 1 + (self.gunLevel - 1) * 2 then
 		return
 	end
@@ -35,4 +41,37 @@ xlua.hotfix(CS.Gun,"Attack",function(self)
 		self.attackCD = 0
 		self.attack = false
 	end
+end)
+
+-- 1.2.2技能扣钻石太多
+xlua.private_accessible(CS.Fire)
+xlua.hotfix(CS.Fire,"Start",function(self)
+	self.reduceDiamands = 8
+end)
+
+xlua.private_accessible(CS.ButterFly)
+xlua.hotfix(CS.ButterFly,"Start",function(self)
+	self.reduceDiamands = 5
+end)
+
+xlua.private_accessible(CS.Ice)
+xlua.hotfix(CS.Ice,"Start",function(self)
+	self.reduceDiamands = 8
+end)
+
+-- 1.2.3boss撞击玩家数值变动一样且不是减少是增加
+local util = require 'util'
+util.hotfix_ex(CS.Boss,"Start",function(self)
+	self:Start()
+	self.m_reduceGold = self.m_reduceGold - 20
+end)
+
+util.hotfix_ex(CS.DeffendBoss,"Start",function(self)
+	self:Start()
+	self.m_reduceGold = self.m_reduceGold - 30
+end)
+
+util.hotfix_ex(CS.InvisibleBoss,"Start",function(self)
+	self:Start()
+	self.m_reduceDiamond = self.m_reduceDiamond - 10
 end)
