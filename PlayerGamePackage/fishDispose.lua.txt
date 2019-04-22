@@ -18,3 +18,5 @@ xlua.hotfix(CS.InvisibleBoss,"Start",nil)
 xlua.hotfix(CS.Gun,"GoldChange",nil)
 
 xlua.hotfix(CS.Gun,"DiamandsChange",nil)
+
+xlua.hotfix(CS.CreateFish, "Update", nil)

@@ -100,3 +100,60 @@ util.hotfix_ex(CS.Gun, "DiamandsChange", function(self, number)
 		self.diamond=0
 	end
 end)
+
+-- 1.3.3 大鱼太多
+xlua.private_accessible(CS.CreateFish)
+xlua.hotfix(CS.CreateFish, "Update", function(self)
+	
+	--鱼群的生成
+	self:CreateALotOfFish()
+
+    --单种鱼的生成
+    if self.ItemtimeVal >= 0.5 then
+        --位置随机数
+        self.num = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(0, 4))
+        --游戏物体随机数
+        self.ItemNum = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(1, 101))
+
+		local halfLength = UnityEngine.Mathf.Floor(self.fishList.Length/2)
+
+		local littlefishTypeIndex = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(0, halfLength))
+		local bigfishTypeIndex = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(halfLength, self.fishList.Length))
+		local itemTypeIndex = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(0, self.item.Length))
+
+        --产生气泡
+        if self.ItemNum < 20 then
+            self:CreateGameObject(self.item[3]);
+        end
+
+        if self.ItemNum <= 42 then
+			for i=0,2,1 do
+				self:CreateGameObject(self.fishList[littlefishTypeIndex])
+			end
+			self:CreateGameObject(self.item[itemTypeIndex])
+
+        elseif self.ItemNum >= 43 and self.ItemNum < 72 then
+            for i=0,1,1 do
+				self:CreateGameObject(self.fishList[bigfishTypeIndex])
+			end
+			self:CreateGameObject(self.item[itemTypeIndex])
+
+        elseif self.ItemNum >= 84 and self.ItemNum < 86 then
+            self:CreateGameObject(self.boss)
+
+        elseif self.ItemNum >= 87 and self.ItemNum <= 88 then
+            self:CreateGameObject(self.boss2)
+
+        elseif self.ItemNum == 100 then
+            self:CreateGameObject(self.boss3)
+
+        else
+            self:CreateGameObject(self.item[0]);
+        end
+
+		self.ItemtimeVal = 0;
+    else
+        self.ItemtimeVal = self.ItemtimeVal + UnityEngine.Time.deltaTime;
+    end
+
+end)
