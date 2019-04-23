@@ -20,3 +20,11 @@ xlua.hotfix(CS.Gun,"GoldChange",nil)
 xlua.hotfix(CS.Gun,"DiamandsChange",nil)
 
 xlua.hotfix(CS.CreateFish, "Update", nil)
+
+xlua.hotfix(CS.Fish, "TakeDamage", nil)
+
+xlua.hotfix(CS.Boss, "TakeDamage", nil)
+
+xlua.hotfix(CS.Gun, "RotateGun", nil)
+
+xlua.hotfix(CS.GunImage, "RotateGun", nil)

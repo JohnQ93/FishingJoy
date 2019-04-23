@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XLua;
 /// <summary>
 /// 普通鱼的类
 /// </summary>
-
+[Hotfix]
 public class Fish : MonoBehaviour
 {
 
