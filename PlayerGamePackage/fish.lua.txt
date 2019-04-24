@@ -102,6 +102,13 @@ util.hotfix_ex(CS.Gun, "DiamandsChange", function(self, number)
 end)
 
 -- 1.3.3 ´óÓãÌ«¶à
+xlua.hotfix(CS.CreateFish, "Start", function(self)
+
+	CS.HotFixScript.LoadResource("level3fish3", "gameobject/enemy.ab")
+	newFish = CS.HotFixScript.GetResource("level3fish3")
+
+end)
+
 xlua.private_accessible(CS.CreateFish)
 xlua.hotfix(CS.CreateFish, "Update", function(self)
 
@@ -137,6 +144,9 @@ xlua.hotfix(CS.CreateFish, "Update", function(self)
 				self:CreateGameObject(self.fishList[bigfishTypeIndex])
 			end
 			self:CreateGameObject(self.item[itemTypeIndex])
+
+		elseif self.ItemNum >= 73 and self.ItemNum < 83 then
+            self:CreateGameObject(newFish)
 
         elseif self.ItemNum >= 84 and self.ItemNum < 86 then
             self:CreateGameObject(self.boss)
