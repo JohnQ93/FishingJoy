@@ -240,3 +240,22 @@ xlua.hotfix(CS.GunImage, "RotateGun", function(self)
 
 	self:ClampAngle()
 end)
+
+-- **************************************************************************************
+-- 2.0 Ôö¼Óº£ÀË
+xlua.private_accessible(CS.HotFixEmpty)
+xlua.hotfix(CS.HotFixEmpty, "Start", function(self)
+
+end)
+
+xlua.hotfix(CS.HotFixEmpty, "Update", function(self)
+
+end)
+
+xlua.hotfix(CS.HotFixEmpty, "OnTriggerEnter", function(self,other)
+
+end)
+
+xlua.hotfix(CS.HotFixEmpty, "BehaviourMethod", function(self)
+
+end)
