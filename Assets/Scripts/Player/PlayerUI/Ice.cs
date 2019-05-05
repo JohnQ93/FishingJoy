@@ -28,7 +28,7 @@ public class Ice : MonoBehaviour
         fireAudio = GetComponent<AudioSource>();
     }
 
-
+    [LuaCallCSharp]
     void Start()
     {
         reduceDiamands = 10;

@@ -17,7 +17,7 @@ public class InvisibleBoss : Boss
     private BoxCollider box;
     private SpriteRenderer sr;
 
-
+    [LuaCallCSharp]
     void Start()
     {
         fire = transform.Find("Fire").gameObject;

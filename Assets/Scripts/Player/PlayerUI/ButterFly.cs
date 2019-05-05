@@ -27,7 +27,7 @@ public class ButterFly : MonoBehaviour
 
     }
 
-
+    [LuaCallCSharp]
     void Start()
     {
         reduceDiamands = 10;

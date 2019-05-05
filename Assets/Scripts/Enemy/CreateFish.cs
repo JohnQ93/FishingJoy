@@ -37,6 +37,7 @@ public class CreateFish : MonoBehaviour
 
     }
     // Use this for initialization
+    [LuaCallCSharp]
     void Start()
     {
 
@@ -67,7 +68,7 @@ public class CreateFish : MonoBehaviour
                 CreateGameObject(item[3]);
                 CreateGameObject(fishList[6]);
             }
-            //贝壳10% 85-94 
+            //贝壳10% 85-94
             //第一种鱼42% 42
             if (ItemNum <= 42)
             {

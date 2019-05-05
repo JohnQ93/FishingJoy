@@ -35,6 +35,7 @@ public class Boss : MonoBehaviour
     protected bool hasIce;
     protected bool isAttack;
 
+    [LuaCallCSharp]
     void Start()
     {
         fire = transform.Find("Fire").gameObject;
@@ -91,7 +92,7 @@ public class Boss : MonoBehaviour
         }
 
     }
-
+    [LuaCallCSharp]
     public virtual void TakeDamage(int attackValue)
     {
         if (Gun.Instance.Fire)

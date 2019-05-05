@@ -15,7 +15,7 @@ public class DeffendBoss : Boss
 
     public GameObject deffend;
 
-
+    [LuaCallCSharp]
     void Start()
     {
         fire = transform.Find("Fire").gameObject;

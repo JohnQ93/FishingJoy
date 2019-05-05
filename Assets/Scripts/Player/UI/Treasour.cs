@@ -41,6 +41,7 @@ public class Treasour : MonoBehaviour
         isDrease = true;
     }
 
+    [LuaCallCSharp]
     private void CreatePrize()
     {
         for (int i = 0; i < 5; i++)

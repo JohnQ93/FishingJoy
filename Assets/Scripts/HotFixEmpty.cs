@@ -6,22 +6,24 @@ using XLua;
 [Hotfix]
 public class HotFixEmpty : MonoBehaviour {
 
-    // Use this for initialization
+    [LuaCallCSharp]
     void Start () {
 
     }
 
-    // Update is called once per frame
+    [LuaCallCSharp]
     void Update () {
 
     }
 
+    [LuaCallCSharp]
     private void OnTriggerEnter(Collider other)
     {
 
     }
 
-    public static void BehaviourMethod()
+    [LuaCallCSharp]
+    public void BehaviourMethod()
     {
 
     }

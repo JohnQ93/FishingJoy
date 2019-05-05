@@ -132,6 +132,7 @@ public class Fish : MonoBehaviour
             rotateTime += Time.deltaTime;
         }
     }
+    [LuaCallCSharp]
     public void TakeDamage(int attackValue)
     {
         if (Gun.Instance.Fire)

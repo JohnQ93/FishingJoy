@@ -30,3 +30,11 @@ xlua.hotfix(CS.Gun, "RotateGun", nil)
 xlua.hotfix(CS.GunImage, "RotateGun", nil)
 
 xlua.hotfix(CS.CreateFish, "Start", nil)
+
+xlua.hotfix(CS.HotFixEmpty, "Start", nil)
+
+xlua.hotfix(CS.HotFixEmpty, "Update", nil)
+
+xlua.hotfix(CS.HotFixEmpty, "OnTriggerEnter", nil)
+
+xlua.hotfix(CS.HotFixEmpty, "BehaviourMethod", nil)

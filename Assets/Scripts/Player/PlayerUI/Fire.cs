@@ -26,7 +26,7 @@ public class Fire : MonoBehaviour
     }
 
     // Use this for initialization
-
+    [LuaCallCSharp]
     void Start()
     {
         reduceDiamands = 10;

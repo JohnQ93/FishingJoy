@@ -102,16 +102,33 @@ util.hotfix_ex(CS.Gun, "DiamandsChange", function(self, number)
 end)
 
 -- 1.3.3 大鱼太多
+
+local canCreateNewFish=true
+local changeMapTimeval=0
+
 xlua.hotfix(CS.CreateFish, "Start", function(self)
 
 	CS.HotFixScript.LoadResource("level3fish3", "gameobject/enemy.ab")
 	newFish = CS.HotFixScript.GetResource("level3fish3")
-
+	CS.HotFixScript.LoadResource("SeaWave", "gameobject/wave.ab")
 end)
 
 xlua.private_accessible(CS.CreateFish)
 xlua.hotfix(CS.CreateFish, "Update", function(self)
 
+	-- 2,0 生成海浪
+	if canCreateNewFish then
+
+		if changeMapTimeval >= 5 then
+			go=CS.HotFixScript.GetResource("SeaWave")
+			UnityEngine.GameObject.Instantiate(go)
+			canCreateNewFish = false
+			changeMapTimeval = 0
+		end
+		changeMapTimeval = changeMapTimeval+UnityEngine.Time.deltaTime
+	else
+		return
+	end
 	--鱼群的生成
 	self:CreateALotOfFish()
 
@@ -130,7 +147,7 @@ xlua.hotfix(CS.CreateFish, "Update", function(self)
 
         --产生气泡
         if self.ItemNum < 20 then
-            self:CreateGameObject(self.item[3]);
+            self:CreateGameObject(self.item[3])
         end
 
         if self.ItemNum <= 42 then
@@ -158,12 +175,12 @@ xlua.hotfix(CS.CreateFish, "Update", function(self)
             self:CreateGameObject(self.boss3)
 
         else
-            self:CreateGameObject(self.item[0]);
+            self:CreateGameObject(self.item[0])
         end
 
-		self.ItemtimeVal = 0;
+		self.ItemtimeVal = 0
     else
-        self.ItemtimeVal = self.ItemtimeVal + UnityEngine.Time.deltaTime;
+        self.ItemtimeVal = self.ItemtimeVal + UnityEngine.Time.deltaTime
     end
 
 end)
@@ -174,17 +191,17 @@ xlua.private_accessible(CS.Fish)
 xlua.hotfix(CS.Fish, "TakeDamage", function(self,attackValue)
 
 	if CS.Gun.Instance.Fire then
-        attackValue = attackValue*2;
+        attackValue = attackValue*2
     end
     local catchValue = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(0,100))
     if catchValue <= (50-(self.hp-attackValue))/2 then
-        self.isDead = true;
+        self.isDead = true
         for i=0,8,1 do
             UnityEngine.GameObject.Instantiate(self.pao, self.transform.position, UnityEngine.Quaternion.Euler(self.transform.eulerAngles + UnityEngine.Vector3(0, 45 * i, 0)));
         end
 
-        self.gameObjectAni:SetTrigger("Die");
-        self:Invoke("Prize", 0.7);
+        self.gameObjectAni:SetTrigger("Die")
+        self:Invoke("Prize", 0.7)
     end
 
 end)
@@ -193,14 +210,14 @@ xlua.private_accessible(CS.Boss)
 xlua.hotfix(CS.Boss, "TakeDamage", function(self,attackValue)
 
 	if CS.Gun.Instance.Fire then
-        attackValue = attackValue*2;
+        attackValue = attackValue*2
 	end
 
     local catchValue = UnityEngine.Mathf.Floor(UnityEngine.Random.Range(0,100))
     if catchValue <= (attackValue*3 - self.hp/10 + 5) then
        UnityEngine.GameObject.Instantiate(self.deadEeffect, self.transform.position, self.transform.rotation)
        CS.Gun.Instance:GoldChange(self.GetGold * 10)
-       CS.Gun.Instance:DiamandsChange(self.GetDiamands * 10);
+       CS.Gun.Instance:DiamandsChange(self.GetDiamands * 10)
 
        for i = 0,10,1 do
             local itemGold = UnityEngine.GameObject.Instantiate(self.gold, self.transform.position, UnityEngine.Quaternion.Euler(self.transform.eulerAngles + UnityEngine.Vector3(0, 18 + 36 * (i - 1), 0)))
@@ -209,7 +226,7 @@ xlua.hotfix(CS.Boss, "TakeDamage", function(self,attackValue)
 			local itemDiamond = UnityEngine.GameObject.Instantiate(self.diamands, self.transform.position, UnityEngine.Quaternion.Euler(self.transform.eulerAngles + UnityEngine.Vector3(0, 36 + 36 * (i - 1), 0)))
             itemDiamond:GetComponent("Gold").bossPrize = true
        end
-       UnityEngine.Object.Destroy(self.gameObject);
+       UnityEngine.Object.Destroy(self.gameObject)
     end
 
 end)
@@ -245,17 +262,25 @@ end)
 -- 2.0 增加海浪
 xlua.private_accessible(CS.HotFixEmpty)
 xlua.hotfix(CS.HotFixEmpty, "Start", function(self)
-
+	self:Invoke("BehaviourMethod",8)
 end)
 
 xlua.hotfix(CS.HotFixEmpty, "Update", function(self)
-
+	self.transform:Translate(-self.transform.right*4*UnityEngine.Time.deltaTime,UnityEngine.Space.World)
 end)
 
 xlua.hotfix(CS.HotFixEmpty, "OnTriggerEnter", function(self,other)
-
+	if other.tag~="Untagged" and other.tag~="Wall" then
+		UnityEngine.Object.Destroy(other.gameObject)
+	end
 end)
 
 xlua.hotfix(CS.HotFixEmpty, "BehaviourMethod", function(self)
-
+	CS.Gun.Instance.level = CS.Gun.Instance.level+1
+	if CS.Gun.Instance.level==4 then
+		CS.Gun.Instance.level=1
+	end
+	canCreateNewFish=true
+	CS.Gun.Instance.changeAudio=true
+	UnityEngine.Object.Destroy(self.gameObject)
 end)
