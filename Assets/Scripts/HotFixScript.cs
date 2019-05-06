@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using XLua;
+using UnityEngine.Networking;
 
 public class HotFixScript : MonoBehaviour {
 
@@ -20,7 +21,8 @@ public class HotFixScript : MonoBehaviour {
 
     private byte[] MyLoader(ref string filePath)
     {
-        string absPath = Path.Combine(Application.dataPath , "..") + "/PlayerGamePackage/" + filePath + ".lua.txt";
+        //string absPath = Path.Combine(Application.dataPath , "..") + "/PlayerGamePackage/" + filePath + ".lua.txt";
+        string absPath = @"E:\Unity2018Projects\Learning\FishingJoy\PlayerGamePackage\" + filePath + ".lua.txt";
         //return File.ReadAllBytes(absPath);
         return System.Text.Encoding.UTF8.GetBytes(File.ReadAllText(absPath));
     }
@@ -36,15 +38,25 @@ public class HotFixScript : MonoBehaviour {
     }
 
     [LuaCallCSharp]
-    public static void LoadResource(string resName, string filePath)
+    public void LoadResource(string resName, string filePath)
     {
-        AssetBundle assetBundle = AssetBundle.LoadFromFile(@"E:\Unity2018Projects\Learning\FishingJoy\AssetBundles\" + filePath);
+        StartCoroutine(LoadResourceCoroutine(resName, filePath));
+    }
+
+    IEnumerator LoadResourceCoroutine(string resName, string filePath)
+    {
+        UnityWebRequest webRequest = UnityWebRequestAssetBundle.GetAssetBundle(@"http://localhost/AssetBundles/" + filePath);
+        yield return webRequest.SendWebRequest();
+        AssetBundle assetBundle = (webRequest.downloadHandler as DownloadHandlerAssetBundle).assetBundle;
         GameObject go = assetBundle.LoadAsset<GameObject>(resName);
         fishDic.Add(resName, go);
     }
+
     [LuaCallCSharp]
     public static GameObject GetResource(string resName)
     {
         return fishDic[resName];
     }
+
+
 }

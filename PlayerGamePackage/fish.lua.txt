@@ -108,9 +108,9 @@ local changeMapTimeval=0
 
 xlua.hotfix(CS.CreateFish, "Start", function(self)
 
-	CS.HotFixScript.LoadResource("level3fish3", "gameobject/enemy.ab")
-	newFish = CS.HotFixScript.GetResource("level3fish3")
-	CS.HotFixScript.LoadResource("SeaWave", "gameobject/wave.ab")
+	self.hotFixScript:LoadResource("level3fish3", "gameobject/enemy.ab")
+
+	self.hotFixScript:LoadResource("SeaWave", "gameobject/wave.ab")
 end)
 
 xlua.private_accessible(CS.CreateFish)
@@ -119,7 +119,7 @@ xlua.hotfix(CS.CreateFish, "Update", function(self)
 	-- 2,0 Éú³Éº£ÀË
 	if canCreateNewFish then
 
-		if changeMapTimeval >= 5 then
+		if changeMapTimeval >= 10 then
 			go=CS.HotFixScript.GetResource("SeaWave")
 			UnityEngine.GameObject.Instantiate(go)
 			canCreateNewFish = false
@@ -163,6 +163,7 @@ xlua.hotfix(CS.CreateFish, "Update", function(self)
 			self:CreateGameObject(self.item[itemTypeIndex])
 
 		elseif self.ItemNum >= 73 and self.ItemNum < 83 then
+			newFish = CS.HotFixScript.GetResource("level3fish3")
             self:CreateGameObject(newFish)
 
         elseif self.ItemNum >= 84 and self.ItemNum < 86 then
