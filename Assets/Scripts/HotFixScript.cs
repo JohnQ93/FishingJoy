@@ -14,9 +14,9 @@ public class HotFixScript : MonoBehaviour {
     void Awake () {
         luaEnv = new LuaEnv();
 
-        luaEnv.AddLoader(MyLoader);
+        //luaEnv.AddLoader(MyLoader);
 
-        luaEnv.DoString("require'fish'");
+        luaEnv.DoString("require 'fish'");
     }
 
     private byte[] MyLoader(ref string filePath)
@@ -29,7 +29,7 @@ public class HotFixScript : MonoBehaviour {
 
     private void OnDisable()
     {
-        luaEnv.DoString("require'fishDispose'");
+        luaEnv.DoString("require 'fishDispose'");
     }
 
     private void OnDestroy()
@@ -57,6 +57,5 @@ public class HotFixScript : MonoBehaviour {
     {
         return fishDic[resName];
     }
-
 
 }
